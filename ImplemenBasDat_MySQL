@@ -1,0 +1,75 @@
+-- CREATE DATABASE RPL_ClassDiagram;
+
+USE RPL_ClassDiagram;
+
+CREATE TABLE Admin (
+    IDadmin INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(255),
+    Email VARCHAR(255),
+    Username VARCHAR(255),
+    Password VARCHAR(255)
+);
+
+CREATE TABLE Artikel (
+    IDartikel INT AUTO_INCREMENT PRIMARY KEY,
+    judul VARCHAR(255),
+    kategori VARCHAR(255),
+    tanggalRilis DATE,
+    photo VARCHAR(255),
+    isiArtikel TEXT,
+    IDadmin INT,
+    FOREIGN KEY (IDadmin) REFERENCES Admin(IDadmin)
+);
+
+CREATE TABLE Pembaca (
+    IDpembaca INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(255),
+    Email VARCHAR(255),
+    Username VARCHAR(255),
+    Password VARCHAR(255),
+    PhotoProfile VARCHAR(255)
+);
+
+CREATE TABLE Komentar (
+    IDkomentar INT AUTO_INCREMENT PRIMARY KEY,
+    UsernamePembaca VARCHAR(255),
+    WaktuKomentar DATETIME,
+    IsiKomentar TEXT,
+    IDartikel INT,
+    IDpembaca INT,
+    FOREIGN KEY (IDartikel) REFERENCES Artikel(IDartikel),
+    FOREIGN KEY (IDpembaca) REFERENCES Pembaca(IDpembaca)
+);
+
+-- 
+
+INSERT INTO Admin (Name, Email, Username, Password) VALUES
+    ('Admin1', 'admin1@example.com', 'admin_user1', 'admin_pass1'),
+    ('Admin2', 'admin2@example.com', 'admin_user2', 'admin_pass2'),
+    ('Admin3', 'admin3@example.com', 'admin_user3', 'admin_pass3');
+
+INSERT INTO Artikel (judul, kategori, tanggalRilis, photo, isiArtikel, IDadmin) VALUES
+    ('Article1', 'Category1', '2023-11-02', 'article1.jpg', 'Content of Article 1', 1),
+    ('Article2', 'Category2', '2023-11-03', 'article2.jpg', 'Content of Article 2', 2),
+    ('Article3', 'Category1', '2023-11-04', 'article3.jpg', 'Content of Article 3', 3);
+
+INSERT INTO Pembaca (Name, Email, Username, Password, PhotoProfile) VALUES
+    ('Reader1', 'reader1@example.com', 'reader_user1', 'reader_pass1', 'reader1.jpg'),
+    ('Reader2', 'reader2@example.com', 'reader_user2', 'reader_pass2', 'reader2.jpg'),
+    ('Reader3', 'reader3@example.com', 'reader_user3', 'reader_pass3', 'reader3.jpg');
+
+INSERT INTO Komentar (UsernamePembaca, WaktuKomentar, IsiKomentar, IDartikel, IDpembaca) VALUES
+    ('Reader1', '2023-11-02 12:00:00', 'Comment 1 on Article 1', 1, 1),
+    ('Reader2', '2023-11-03 13:00:00', 'Comment 1 on Article 2', 2, 2),
+    ('Reader3', '2023-11-04 14:00:00', 'Comment 1 on Article 3', 3, 3),
+    ('Reader1', '2023-11-02 12:30:00', 'Comment 2 on Article 1', 1, 1);
+
+--
+
+SHOW TABLES;
+SELECT * FROM Admin;
+SELECT * FROM Artikel;
+SELECT * FROM Pembaca;
+SELECT * FROM Komentar;
+
+
